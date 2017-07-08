@@ -1,7 +1,9 @@
 {
   "presets": ["flow", ["env", {
     "targets": {
-      "node": true
+      "node": 4,
+      "browsers": ["> 1%", "last 2 versions", "Firefox ESR"],
+      "uglify": true
     }
   }]]
 }
