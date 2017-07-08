@@ -4,8 +4,8 @@ Turn plain URLs in text into Markdown links. Works in the browser and on the ser
 
 ## Usage
 
-1. Input:  "Made by folks from https://spectrum.chat"
-2. Output: "Made by folks from [https://spectrum.chat](https://spectrum.chat)"
+1. Input:  `"Made by folks from https://spectrum.chat"`
+2. Output: `"Made by folks from [https://spectrum.chat](https://spectrum.chat)"`
 
 ```javascript
 const linkify = require('markdown-linkify');
