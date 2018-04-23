@@ -24,8 +24,15 @@ const linkify = (text /*: string*/ /*: string*/) => {
     if (last < match.index) {
       result.push(text.slice(last, match.index));
     }
-    // Add the current link
-    result.push(`[${match.text}](${match.url})`);
+    // Add the current link, if it is not already an inline markdown link
+    if (
+      text.slice(match.index - 2, match.index) !== '](' &&
+      text.slice(match.lastIndex, match.lastIndex + 2) !== ']('
+    ) {
+      result.push(`[${match.text}](${match.url})`);
+    } else {
+      result.push(text.slice(match.index, match.lastIndex));
+    }
     // Set the index of this match for the next round
     last = match.lastIndex;
   });

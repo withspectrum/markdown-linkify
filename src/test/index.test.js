@@ -106,4 +106,16 @@ describe('edge cases', () => {
     const text = 'An email hi@spectrum.chat';
     expect(linkify(text)).toEqual('An email hi@spectrum.chat');
   });
+
+  it('should not change text that is already in the form of an inline markdown link', () => {
+    const text =
+      'This is [an example](http://example.com/ "Title") markdown link.';
+    expect(linkify(text)).toEqual(text);
+    const text2 =
+      'This is [an example](http://example.com/) markdown link with no Title.';
+    expect(linkify(text2)).toEqual(text2);
+    const text3 =
+      'This is [http://example.com/](http://example.com/) markdown link with matching text.';
+    expect(linkify(text3)).toEqual(text3);
+  });
 });
