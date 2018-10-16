@@ -106,4 +106,9 @@ describe('edge cases', () => {
     const text = 'An email hi@spectrum.chat';
     expect(linkify(text)).toEqual('An email hi@spectrum.chat');
   });
+
+  it('should not linkify markdown links', () => {
+    const text = 'A link [to google](http://google.com)';
+    expect(linkify(text)).toEqual(text);
+  });
 });
