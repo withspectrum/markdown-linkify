@@ -127,4 +127,9 @@ describe('edge cases', () => {
       'A link [to google](http://google.com) [http://google.com](http://google.com) [to google](http://google.com) [http://google.com](http://google.com)'
     );
   });
+
+  it('should link text containing parens', () => {
+    const text = '[A link to (google)](http://google.com)';
+    expect(linkify(text)).toEqual('[A link to (google)](http://google.com)');
+  });
 });
