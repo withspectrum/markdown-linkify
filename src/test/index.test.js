@@ -111,4 +111,20 @@ describe('edge cases', () => {
     const text = 'A link [to google](http://google.com)';
     expect(linkify(text)).toEqual(text);
   });
+
+  it('should work with multiple links', () => {
+    const text =
+      'A link [to google](http://google.com) with another link to http://google.com';
+    expect(linkify(text)).toEqual(
+      'A link [to google](http://google.com) with another link to [http://google.com](http://google.com)'
+    );
+  });
+
+  it('should work a bunch of links', () => {
+    const text =
+      'A link [to google](http://google.com) http://google.com [to google](http://google.com) http://google.com';
+    expect(linkify(text)).toEqual(
+      'A link [to google](http://google.com) [http://google.com](http://google.com) [to google](http://google.com) [http://google.com](http://google.com)'
+    );
+  });
 });
