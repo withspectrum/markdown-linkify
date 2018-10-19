@@ -15,27 +15,23 @@ Object.keys(linkifier.__compiled__).forEach(schema => {
     const oldValidate = linkifier.__compiled__[schema].validate;
 
     linkifier.__compiled__[schema].validate = (text, pos, self) => {
-      const tail = text.slice(text.slice(0, pos).lastIndexOf('['));
-
-      let startIndex;
-      let curr = pos;
-
-      // Walk backward in the string to find '(' in the markdown link
-      while (text[curr] && text[curr--] !== ' ') {
-        if (text[curr] === '(') {
-          startIndex = curr;
-          break;
-        }
-      }
-
       if (!self.re.markdownLink) {
         self.re.markdownLink = new RegExp(
           /[!&]?\[([!&]?\[.*?\)|[^\]]*?)]\((.*?)( .*?)?\)/
         );
       }
 
-      if (self.re.markdownLink.test(tail) && startIndex) {
-        return false;
+      const linkStart = pos - schema.length;
+      const match = text.match(self.re.markdownLink);
+
+      // Text is a markdown link
+      if (match) {
+        const matchLinkStart = match[1].length + 2 + match.index + 1;
+
+        // The matched link is at the current position
+        if (linkStart <= matchLinkStart) {
+          return false;
+        }
       }
 
       return oldValidate(text, pos, self);
@@ -52,8 +48,8 @@ const linkify = (text /*: string*/ /*: string*/) => {
   // No match, return the text
   if (!matches) return text;
 
+  const result = [];
   let last = 0;
-  let result = [];
   // Build up the result
   matches.forEach(match => {
     // If there is text between the last match and this one add it to the result now
@@ -65,7 +61,7 @@ const linkify = (text /*: string*/ /*: string*/) => {
     // Set the index of this match for the next round
     last = match.lastIndex;
   });
-  // If there is text after the last match add it at the ned
+  // If there is text after the last match add it at the end
   if (last < text.length) {
     result.push(text.slice(last));
   }
