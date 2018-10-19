@@ -48,8 +48,8 @@ const linkify = (text /*: string*/ /*: string*/) => {
   // No match, return the text
   if (!matches) return text;
 
+  const result = [];
   let last = 0;
-  let result = [];
   // Build up the result
   matches.forEach(match => {
     // If there is text between the last match and this one add it to the result now
