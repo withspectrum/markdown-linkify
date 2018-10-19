@@ -61,7 +61,7 @@ const linkify = (text /*: string*/ /*: string*/) => {
     // Set the index of this match for the next round
     last = match.lastIndex;
   });
-  // If there is text after the last match add it at the ned
+  // If there is text after the last match add it at the end
   if (last < text.length) {
     result.push(text.slice(last));
   }
