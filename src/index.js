@@ -15,18 +15,7 @@ Object.keys(linkifier.__compiled__).forEach(schema => {
     const oldValidate = linkifier.__compiled__[schema].validate;
 
     linkifier.__compiled__[schema].validate = (text, pos, self) => {
-      const tail = text.slice(text.slice(0, pos).lastIndexOf('['));
-
-      let startIndex;
-      let curr = pos;
-
-      // Walk backward in the string to find '(' in the markdown link
-      while (text[curr] && text[curr--] !== ' ') {
-        if (text[curr] === '(') {
-          startIndex = curr;
-          break;
-        }
-      }
+      const linkStart = pos - schema.length;
 
       if (!self.re.markdownLink) {
         self.re.markdownLink = new RegExp(
@@ -34,7 +23,16 @@ Object.keys(linkifier.__compiled__).forEach(schema => {
         );
       }
 
-      if (self.re.markdownLink.test(tail) && startIndex) {
+      const match = text.match(self.re.markdownLink);
+      let matchLinkStart;
+
+      if (match) {
+        matchLinkStart = match[1].length + 2 + match.index + 1;
+      }
+
+      // Ensure text isn't a markdown link and that the matched link
+      // is at the current position
+      if (self.re.markdownLink.test(text) && linkStart <= matchLinkStart) {
         return false;
       }
 
