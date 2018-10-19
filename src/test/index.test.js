@@ -138,7 +138,7 @@ describe('edge cases', () => {
     expect(linkify(text)).toEqual('[http://google.com](http://google.com)');
   });
 
-  it('should not transform markdown link with link as label', () => {
+  it('should not transform markdown link with link as label with spaces', () => {
     const text = '[ http://google.com](http://google.com)';
     expect(linkify(text)).toEqual('[ http://google.com](http://google.com)');
   });
