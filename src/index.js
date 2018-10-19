@@ -15,25 +15,23 @@ Object.keys(linkifier.__compiled__).forEach(schema => {
     const oldValidate = linkifier.__compiled__[schema].validate;
 
     linkifier.__compiled__[schema].validate = (text, pos, self) => {
-      const linkStart = pos - schema.length;
-
       if (!self.re.markdownLink) {
         self.re.markdownLink = new RegExp(
           /[!&]?\[([!&]?\[.*?\)|[^\]]*?)]\((.*?)( .*?)?\)/
         );
       }
 
+      const linkStart = pos - schema.length;
       const match = text.match(self.re.markdownLink);
-      let matchLinkStart;
 
+      // Text is a markdown link
       if (match) {
-        matchLinkStart = match[1].length + 2 + match.index + 1;
-      }
+        const matchLinkStart = match[1].length + 2 + match.index + 1;
 
-      // Ensure text isn't a markdown link and that the matched link
-      // is at the current position
-      if (self.re.markdownLink.test(text) && linkStart <= matchLinkStart) {
-        return false;
+        // The matched link is at the current position
+        if (linkStart <= matchLinkStart) {
+          return false;
+        }
       }
 
       return oldValidate(text, pos, self);
