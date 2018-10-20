@@ -1,6 +1,6 @@
 {
   "name": "markdown-linkify",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Turn plain URLs in text into Markdown links. Works in the browser and on the server.",
   "repository": {
     "type": "git",
