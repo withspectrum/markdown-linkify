@@ -35,6 +35,6 @@
     "rimraf": "^2.6.2"
   },
   "dependencies": {
-    "linkify-it": "^2.0.3"
+    "linkify-it": "^2.2.0"
   }
 }
